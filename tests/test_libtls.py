@@ -1,4 +1,5 @@
-from libtls import *
+from tls import *
+from tls.lib import types
 
 
 def test_tls_init():
@@ -15,4 +16,8 @@ def test_tls_config_new():
 def test_tls_config_free():
     cfg = tls_config_new()
     tls_config_free(cfg)
-    print(cfg)
+
+
+def test_external_server():
+    cfg = tls_config_new()
+
