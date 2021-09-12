@@ -1,20 +1,20 @@
 from tls import *
-from tls.lib import types
+from tls.lib import types, constants
 
 
-def test_tls_init():
+def test_tls_config():
     assert tls_init() == 0
-
-
-def test_tls_config_new():
     cfg = tls_config_new()
     assert type(cfg) is types.tls_config_p
     err = tls_config_error(cfg)
     assert err is None
 
+    protocols = tls_config_parse_protocols('secure,!tlsv1.3')
+    assert protocols == constants.TLS_PROTOCOL_TLSv1_2
+    protocols = tls_config_parse_protocols('secure')
+    assert protocols == constants.TLS_PROTOCOL_TLSv1_2 | constants.TLS_PROTOCOL_TLSv1_3
 
-def test_tls_config_free():
-    cfg = tls_config_new()
+    tls_config_clear_keys(cfg)
     tls_config_free(cfg)
 
 
