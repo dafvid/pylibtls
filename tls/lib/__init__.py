@@ -1,6 +1,6 @@
 import sys
 
-from ctypes import CDLL, c_int, c_char_p, c_void_p, c_size_t, c_ssize_t, c_uint32
+from ctypes import POINTER, CDLL, c_int, c_char_p, c_void_p, c_size_t, c_ssize_t, c_uint32
 
 from . import types
 
@@ -79,11 +79,18 @@ tls_config_set_verify_depth = _lib.tls_config_set_verify_depth
 tls_config_set_verify_depth.argtypes = [types.tls_config_p, c_int]
 tls_config_set_verify_depth.restype = c_int
 
-tls_server = _lib.tls_server
-tls_server.restype = types.tls_p
+tls_config_clear_keys = _lib.tls_config_clear_keys
+tls_config_clear_keys.argtypes = [types.tls_config_p]
+
+tls_config_parse_protocols = _lib.tls_config_parse_protocols
+tls_config_parse_protocols.argtypes = [POINTER(c_uint32), c_char_p]
+tls_config_parse_protocols.restype = c_int
 
 tls_client = _lib.tls_client
 tls_client.restype = types.tls_p
+
+tls_server = _lib.tls_server
+tls_server.restype = types.tls_p
 
 tls_configure = _lib.tls_configure
 tls_configure.argtypes = [types.tls_p, types.tls_config_p]

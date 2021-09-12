@@ -1,4 +1,4 @@
-from ctypes import create_string_buffer
+import ctypes
 
 from . import lib
 
@@ -117,12 +117,25 @@ def tls_config_set_verify_depth(_config, _verify_depth):
         raise TLSError(tls_config_error(_config))
 
 
-def tls_server():
-    return lib.tls_server()
+def tls_config_clear_keys(_config):
+    lib.tls_config_clear_keys(_config)
+
+
+def tls_config_parse_protocols(_protostr):
+    p = ctypes.c_uint32(0)
+    _protocols = ctypes.byref(p)
+    r = lib.tls_config_parse_protocols(_protocols, _protostr.encode())
+    if r == -1:
+        raise TLSError("Unable to parse protocol string '{}'".format(_protostr))
+    return p.value
 
 
 def tls_client():
     return lib.tls_client()
+
+
+def tls_server():
+    return lib.tls_server()
 
 
 def tls_configure(_ctx, _config):
@@ -157,7 +170,7 @@ def tls_handshake(_ctx):
         raise TLSError(tls_error(_ctx))
 
 
-def tls_read(_ctx, _buflen):
+def tls_read(_ctx, _buflen=2048):
     _buf = create_string_buffer(_buflen)
     r = lib.tls_read(_ctx, _buf, _buflen)
     if r == -1:
@@ -171,3 +184,9 @@ def tls_write(_ctx, _data):
     if r == -1:
         raise TLSError(tls_error(_ctx))
     return r
+
+
+def tls_close(_ctx):
+    r = lib.tls_close(_ctx)
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
