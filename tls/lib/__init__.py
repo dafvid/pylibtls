@@ -146,5 +146,33 @@ tls_write.restype = c_ssize_t
 tls_close = _lib.tls_close
 tls_close.argtypes = [types.tls_p]
 
+tls_peer_cert_provided = _lib.tls_peer_cert_provided
+tls_peer_cert_provided.argtypes = [types.tls_p]
+tls_peer_cert_provided.restypes = c_int
+
+tls_peer_cert_contains_name = _lib.tls_peer_cert_contains_name
+tls_peer_cert_contains_name.argtypes = [types.tls_p, c_char_p]
+tls_peer_cert_contains_name.restype = c_int
+
+tls_peer_cert_hash = _lib.tls_peer_cert_hash
+tls_peer_cert_hash.argtypes = [types.tls_p]
+tls_peer_cert_hash.restype = c_char_p
+
+tls_peer_cert_issuer = _lib.tls_peer_cert_issuer
+tls_peer_cert_issuer.argtypes = [types.tls_p]
+tls_peer_cert_issuer.restype = c_char_p
+
+tls_peer_cert_subject = _lib.tls_peer_cert_subject
+tls_peer_cert_subject.argtypes = [types.tls_p]
+tls_peer_cert_subject.restype = c_char_p
+
+tls_peer_cert_notbefore = _lib.tls_peer_cert_notbefore
+tls_peer_cert_notbefore.argtypes = [types.tls_p]
+tls_peer_cert_notbefore.restype = types.time_t
+
+tls_peer_cert_notafter = _lib.tls_peer_cert_notafter
+tls_peer_cert_notafter.argtypes = [types.tls_p]
+tls_peer_cert_notafter.restype = types.time_t
+
 __all__ = sorted(name for name in sys.modules[__name__].__dict__ if name.startswith('tls_'))
 __all__.extend(('types', 'constants', 'errors'))

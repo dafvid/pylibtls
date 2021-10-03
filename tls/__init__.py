@@ -1,5 +1,7 @@
 import ctypes
 
+from datetime import datetime
+
 from . import lib
 
 from .lib import (tls_config_insecure_noverifycert, tls_config_insecure_noverifyname, tls_config_insecure_noverifytime,
@@ -174,3 +176,56 @@ def tls_close(_ctx):
     r = lib.tls_close(_ctx)
     if r == -1:
         raise TLSError(tls_error(_ctx))
+
+
+def tls_peer_cert_provided(_ctx):
+    r = lib.tls_peer_cert_provided(_ctx)
+    if r == 1:
+        return True
+    elif r == 0:
+        return False
+    else:
+        raise TLSError(tls_error(_ctx))
+
+
+def tls_peer_cert_contains_name(_ctx, _name):
+    r = lib.tls_peer_cert_contains_name(_ctx, _name.encode())
+    if r == 1:
+        return True
+    elif r == 0:
+        return False
+    else:
+        raise TLSError(tls_error(_ctx))
+
+
+def tls_peer_cert_hash(_ctx):
+    r = lib.tls_peer_cert_hash(_ctx)
+    return r.decode()
+
+
+def tls_peer_cert_issuer(_ctx):
+    r = lib.tls_peer_cert_issuer(_ctx)
+    return r.decode()
+
+
+def tls_peer_cert_subject(_ctx):
+    r = lib.tls_peer_cert_subject(_ctx)
+    return r.decode()
+
+
+def tls_peer_cert_notbefore(_ctx):
+    r = lib.tls_peer_cert_notbefore(_ctx)
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
+
+    return datetime.fromtimestamp(r)
+
+
+def tls_peer_cert_notafter(_ctx):
+    r = lib.tls_peer_cert_notafter(_ctx)
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
+
+    return datetime.fromtimestamp(r)
+
+

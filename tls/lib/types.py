@@ -1,4 +1,6 @@
-from ctypes import Structure, POINTER
+from ctypes import Structure, POINTER, c_uint32
+
+time_t = c_uint32
 
 
 class tls(Structure):
