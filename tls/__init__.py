@@ -2,6 +2,10 @@ import ctypes
 
 from . import lib
 
+from .lib import (tls_config_insecure_noverifycert, tls_config_insecure_noverifyname, tls_config_insecure_noverifytime,
+                  tls_config_verify, tls_config_ocsp_require_stapling, tls_config_verify_client,
+                  tls_config_verify_client_optional, tls_config_clear_keys, tls_client, tls_server, tls_reset, tls_free)
+
 from .lib.constants import *
 
 
@@ -117,10 +121,6 @@ def tls_config_set_verify_depth(_config, _verify_depth):
         raise TLSError(tls_config_error(_config))
 
 
-def tls_config_clear_keys(_config):
-    lib.tls_config_clear_keys(_config)
-
-
 def tls_config_parse_protocols(_protostr):
     p = ctypes.c_uint32(0)
     _protocols = ctypes.byref(p)
@@ -130,26 +130,10 @@ def tls_config_parse_protocols(_protostr):
     return p.value
 
 
-def tls_client():
-    return lib.tls_client()
-
-
-def tls_server():
-    return lib.tls_server()
-
-
 def tls_configure(_ctx, _config):
     r = lib.tls_configure(_ctx, _config)
     if r == -1:
         raise TLSError(tls_error(_ctx))
-
-
-def tls_reset(_ctx):
-    lib.tls_reset(_ctx)
-
-
-def tls_free(_ctx):
-    lib.tls_free(_ctx)
 
 
 def tls_accept_socket(_ctx, _cctx, _socket):
@@ -171,7 +155,7 @@ def tls_handshake(_ctx):
 
 
 def tls_read(_ctx, _buflen=2048):
-    _buf = create_string_buffer(_buflen)
+    _buf = ctypes.create_string_buffer(_buflen)
     r = lib.tls_read(_ctx, _buf, _buflen)
     if r == -1:
         raise TLSError(tls_error(_ctx))

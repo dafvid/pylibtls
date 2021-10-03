@@ -79,6 +79,27 @@ tls_config_set_verify_depth = _lib.tls_config_set_verify_depth
 tls_config_set_verify_depth.argtypes = [types.tls_config_p, c_int]
 tls_config_set_verify_depth.restype = c_int
 
+tls_config_insecure_noverifycert = _lib.tls_config_insecure_noverifycert
+tls_config_insecure_noverifycert.argtypes = [types.tls_config_p]
+
+tls_config_insecure_noverifyname = _lib.tls_config_insecure_noverifyname
+tls_config_insecure_noverifyname.argtypes = [types.tls_config_p]
+
+tls_config_insecure_noverifytime = _lib.tls_config_insecure_noverifytime
+tls_config_insecure_noverifytime.argtypes = [types.tls_config_p]
+
+tls_config_verify = _lib.tls_config_verify
+tls_config_verify.argtypes = [types.tls_config_p]
+
+tls_config_ocsp_require_stapling = _lib.tls_config_ocsp_require_stapling
+tls_config_ocsp_require_stapling.argtypes = [types.tls_config_p]
+
+tls_config_verify_client = _lib.tls_config_verify_client
+tls_config_verify_client.argtypes = [types.tls_config_p]
+
+tls_config_verify_client_optional = _lib.tls_config_verify_client_optional
+tls_config_verify_client_optional.argtypes = [types.tls_config_p]
+
 tls_config_clear_keys = _lib.tls_config_clear_keys
 tls_config_clear_keys.argtypes = [types.tls_config_p]
 
