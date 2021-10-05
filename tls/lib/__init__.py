@@ -145,6 +145,7 @@ tls_write.restype = c_ssize_t
 
 tls_close = _lib.tls_close
 tls_close.argtypes = [types.tls_p]
+tls_close.restype = c_int
 
 tls_peer_cert_provided = _lib.tls_peer_cert_provided
 tls_peer_cert_provided.argtypes = [types.tls_p]
