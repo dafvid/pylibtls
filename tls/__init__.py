@@ -4,8 +4,10 @@ from datetime import datetime
 
 from . import lib
 
-from .lib import (tls_config_insecure_noverifycert, tls_config_insecure_noverifyname, tls_config_insecure_noverifytime,
-                  tls_config_verify, tls_config_ocsp_require_stapling, tls_config_verify_client,
+from .lib import (tls_init, tls_config_new, tls_config_free, tls_config_prefer_ciphers_client,
+                  tls_config_prefer_ciphers_server, tls_config_insecure_noverifycert, tls_config_insecure_noverifyname,
+                  tls_config_insecure_noverifytime, tls_config_verify, tls_config_ocsp_require_stapling,
+                  tls_config_verify_client,
                   tls_config_verify_client_optional, tls_config_clear_keys, tls_client, tls_server, tls_reset, tls_free)
 
 from .lib.constants import *
@@ -13,10 +15,6 @@ from .lib.constants import *
 
 class TLSError(Exception):
     pass
-
-
-def tls_init():
-    return lib.tls_init()
 
 
 def tls_config_error(_config):
@@ -31,18 +29,28 @@ def tls_error(_tls):
         return e.decode()
 
 
-def tls_config_new():
-    return lib.tls_config_new()
-
-
-def tls_config_free(_config):
-    lib.tls_config_free(_config)
-
-
 def tls_default_ca_cert_file():
     ca_cert = lib.tls_default_ca_cert_file()
     if ca_cert is not None:
         return ca_cert.decode()
+
+
+def tls_config_add_keypair_file(_config, _cert_file, _key_file):
+    r = lib.tls_config_add_keypair_file(_config, _cert_file.encode(), _key_file.encode())
+    if r == -1:
+        raise TLSError(tls_config_error(_config))
+
+
+def tls_config_add_keypair_ocsp_file(_config, _cert_file, _key_file, _ocsp_staple_file):
+    r = lib.tls_config_add_keypair_ocsp_file(_config, _cert_file, _key_file, _ocsp_staple_file)
+    if r == -1:
+        raise TLSError(tls_config_error(_config))
+
+
+def tls_config_set_alpn(_config, _alpn):
+    r = lib.tls_config_set_alpn(_config, _alpn)
+    if r == -1:
+        raise TLSError(tls_config_error(_config))
 
 
 def tls_config_set_ca_file(_config, _ca_file):
@@ -80,11 +88,9 @@ def tls_config_set_dheparams(_config, _params):
     if r == -1:
         raise TLSError(tls_config_error(_config))
 
-    
+
 def tls_config_set_ecdhecurve(_config, _curve):
-    r = lib.tls_config_set_ecdhecurve(_config, _curve.encode())
-    if r == -1:
-        raise TLSError(tls_config_error(_config))
+    raise TLSError('Function tls_config_set_ecdhecurve() is deprecated. Use tls_config_set_ecdhecurves()')
 
     
 def tls_config_set_ecdhecurves(_config, _curves):
@@ -95,6 +101,18 @@ def tls_config_set_ecdhecurves(_config, _curves):
     
 def tls_config_set_key_file(_config, _key_file):
     r = lib.tls_config_set_key_file(_config, _key_file.encode())
+    if r == -1:
+        raise TLSError(tls_config_error(_config))
+
+
+def tls_config_set_keypair_file(_config, _cert_file, _key_file):
+    r = lib.tls_config_set_keypair_file(_config, _cert_file.encode(), _key_file.encode())
+    if r == -1:
+        raise TLSError(tls_config_error(_config))
+
+
+def tls_config_set_keypair_ocsp_file(_config, _cert_file, _key_file, _staple_file):
+    r = lib.tls_config_set_keypair_ocsp_file(_config, _cert_file.encode(), _key_file.encode(), _staple_file.encode())
     if r == -1:
         raise TLSError(tls_config_error(_config))
 

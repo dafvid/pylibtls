@@ -4,6 +4,7 @@ from ctypes import POINTER, CDLL, c_int, c_char_p, c_void_p, c_size_t, c_ssize_t
 
 from . import types
 
+# TODO load by name or env
 _lib = CDLL('/usr/local/lib/libtls.so')
 
 
@@ -26,6 +27,18 @@ tls_config_free.argtypes = [types.tls_config_p]
 
 tls_default_ca_cert_file = _lib.tls_default_ca_cert_file
 tls_default_ca_cert_file.restype = c_char_p
+
+tls_config_add_keypair_file = _lib.tls_config_add_keypair_file
+tls_config_add_keypair_file.argtypes = [types.tls_config_p, c_char_p, c_char_p]
+tls_config_add_keypair_file.restype = c_int
+
+tls_config_add_keypair_ocsp_file = _lib.tls_config_add_keypair_ocsp_file
+tls_config_add_keypair_ocsp_file.argtypes = [types.tls_config_p, c_char_p, c_char_p, c_char_p]
+tls_config_add_keypair_ocsp_file.restype = c_int
+
+tls_config_set_alpn = _lib.tls_config_set_alpn
+tls_config_set_alpn.argtypes = [types.tls_config_p, c_char_p]
+tls_config_set_alpn.restype = c_int
 
 tls_config_set_ca_file = _lib.tls_config_set_ca_file
 tls_config_set_ca_file.argtypes = [types.tls_config_p, c_char_p]
@@ -51,10 +64,6 @@ tls_config_set_dheparams = _lib.tls_config_set_dheparams
 tls_config_set_dheparams.argtypes = [types.tls_config_p, c_char_p]
 tls_config_set_dheparams.restype = c_int
 
-tls_config_set_ecdhecurve = _lib.tls_config_set_ecdhecurve
-tls_config_set_ecdhecurve.argtypes = [types.tls_config_p, c_char_p]
-tls_config_set_ecdhecurve.restype = c_int
-
 tls_config_set_ecdhecurves = _lib.tls_config_set_ecdhecurves
 tls_config_set_ecdhecurves.argtypes = [types.tls_config_p, c_char_p]
 tls_config_set_ecdhecurves.restype = c_int
@@ -62,6 +71,14 @@ tls_config_set_ecdhecurves.restype = c_int
 tls_config_set_key_file = _lib.tls_config_set_key_file
 tls_config_set_key_file.argtypes = [types.tls_config_p, c_char_p]
 tls_config_set_key_file.restype = c_int
+
+tls_config_set_keypair_file = _lib.tls_config_set_keypair_file
+tls_config_set_keypair_file.argtypes = [types.tls_config_p, c_char_p, c_char_p]
+tls_config_set_keypair_file.restype = c_int
+
+tls_config_set_keypair_ocsp_file = _lib.tls_config_set_keypair_ocsp_file
+tls_config_set_keypair_ocsp_file.argtypes = [types.tls_config_p, c_char_p, c_char_p, c_char_p]
+tls_config_set_keypair_ocsp_file.restype = c_int
 
 tls_config_set_ocsp_staple_file = _lib.tls_config_set_ocsp_staple_file
 tls_config_set_ocsp_staple_file.argtypes = [types.tls_config_p, c_char_p]
@@ -78,6 +95,12 @@ tls_config_set_session_fd.restype = c_int
 tls_config_set_verify_depth = _lib.tls_config_set_verify_depth
 tls_config_set_verify_depth.argtypes = [types.tls_config_p, c_int]
 tls_config_set_verify_depth.restype = c_int
+
+tls_config_prefer_ciphers_client = _lib.tls_config_prefer_ciphers_client
+tls_config_prefer_ciphers_client.argtypes = [types.tls_config_p]
+
+tls_config_prefer_ciphers_server = _lib.tls_config_prefer_ciphers_server
+tls_config_prefer_ciphers_server.argtypes = [types.tls_config_p]
 
 tls_config_insecure_noverifycert = _lib.tls_config_insecure_noverifycert
 tls_config_insecure_noverifycert.argtypes = [types.tls_config_p]
