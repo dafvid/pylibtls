@@ -8,7 +8,8 @@ from .lib import (tls_init, tls_config_new, tls_config_free, tls_config_prefer_c
                   tls_config_prefer_ciphers_server, tls_config_insecure_noverifycert, tls_config_insecure_noverifyname,
                   tls_config_insecure_noverifytime, tls_config_verify, tls_config_ocsp_require_stapling,
                   tls_config_verify_client,
-                  tls_config_verify_client_optional, tls_config_clear_keys, tls_client, tls_server, tls_reset, tls_free)
+                  tls_config_verify_client_optional, tls_config_clear_keys, tls_client, tls_server, tls_reset, tls_free,
+                  tls_conn_cipher_strength)
 
 from .lib.constants import *
 
@@ -213,7 +214,7 @@ def tls_peer_cert_contains_name(_ctx, _name):
     elif r == 0:
         return False
     else:
-        raise TLSError(tls_error(_ctx))
+        raise TLSError('Unknown return value {}'.format(r))
 
 
 def tls_peer_cert_hash(_ctx):
@@ -245,5 +246,38 @@ def tls_peer_cert_notafter(_ctx):
         raise TLSError(tls_error(_ctx))
 
     return datetime.fromtimestamp(r)
+
+
+def tls_conn_alpn_selected(_ctx):
+    r = lib.tls_conn_alpn_selected(_ctx)
+    if r is not None:
+        return r.decode()
+
+
+def tls_conn_cipher(_ctx):
+    r = lib.tls_conn_cipher(_ctx)
+    return r.decode()
+
+
+def tls_conn_servername(_ctx):
+    r = lib.tls_conn_servername(_ctx)
+    return r.decode()
+
+
+def tls_conn_session_resumed(_ctx):
+    r = lib.tls_conn_session_resumed(_ctx)
+    if r == 1:
+        return True
+    elif r == 0:
+        return False
+    else:
+        raise TLSError('Unknown return value {}'.format(r))
+
+
+def tls_conn_version(_ctx):
+    r = lib.tls_conn_version(_ctx)
+    return r.decode()
+
+
 
 

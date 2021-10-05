@@ -198,5 +198,30 @@ tls_peer_cert_notafter = _lib.tls_peer_cert_notafter
 tls_peer_cert_notafter.argtypes = [types.tls_p]
 tls_peer_cert_notafter.restype = types.time_t
 
+tls_conn_alpn_selected = _lib.tls_conn_alpn_selected
+tls_conn_alpn_selected.argtypes = [types.tls_p]
+tls_conn_alpn_selected.restype = c_char_p
+
+tls_conn_cipher = _lib.tls_conn_cipher
+tls_conn_cipher.argtypes = [types.tls_p]
+tls_conn_cipher.restype = c_char_p
+
+tls_conn_cipher_strength = _lib.tls_conn_cipher_strength
+tls_conn_cipher_strength.argtypes = [types.tls_p]
+tls_conn_cipher_strength.restype = c_int
+
+tls_conn_servername = _lib.tls_conn_servername
+tls_conn_servername.argtypes = [types.tls_p]
+tls_conn_servername.restype = c_char_p
+
+tls_conn_session_resumed = _lib.tls_conn_session_resumed
+tls_conn_session_resumed.argtypes = [types.tls_p]
+tls_conn_session_resumed.restype = c_int
+
+tls_conn_version = _lib.tls_conn_version
+tls_conn_version.argtypes = [types.tls_p]
+tls_conn_version.restype = c_char_p
+
+
 __all__ = sorted(name for name in sys.modules[__name__].__dict__ if name.startswith('tls_'))
 __all__.extend(('types', 'constants', 'errors'))
