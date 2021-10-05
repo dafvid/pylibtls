@@ -222,6 +222,41 @@ tls_conn_version = _lib.tls_conn_version
 tls_conn_version.argtypes = [types.tls_p]
 tls_conn_version.restype = c_char_p
 
+tls_ocsp_process_response = _lib.tls_ocsp_process_response
+tls_ocsp_process_response.argtypes = [types.tls_p, c_char_p, c_size_t]
+tls_ocsp_process_response.restype = c_int
+
+tls_peer_ocsp_cert_status = _lib.tls_peer_ocsp_cert_status
+tls_peer_ocsp_cert_status.argtypes = [types.tls_p]
+tls_peer_ocsp_cert_status.restype = c_int
+
+tls_peer_ocsp_crl_reason = _lib.tls_peer_ocsp_crl_reason
+tls_peer_ocsp_crl_reason.argtypes = [types.tls_p]
+tls_peer_ocsp_crl_reason.restype = c_int
+
+tls_peer_ocsp_next_update = _lib.tls_peer_ocsp_next_update
+tls_peer_ocsp_next_update.argtypes = [types.tls_p]
+tls_peer_ocsp_next_update.restype = types.time_t
+
+tls_peer_ocsp_response_status = _lib.tls_peer_ocsp_response_status
+tls_peer_ocsp_response_status.argtypes = [types.tls_p]
+tls_peer_ocsp_response_status.restype = c_int
+
+tls_peer_ocsp_result = _lib.tls_peer_ocsp_result
+tls_peer_ocsp_result.argtypes = [types.tls_p]
+tls_peer_ocsp_result.restype = c_char_p
+
+tls_peer_ocsp_revocation_time = _lib.tls_peer_ocsp_revocation_time
+tls_peer_ocsp_revocation_time.argtypes = [types.tls_p]
+tls_peer_ocsp_revocation_time.restype = types.time_t
+
+tls_peer_ocsp_this_update = _lib.tls_peer_ocsp_this_update
+tls_peer_ocsp_this_update.argtypes = [types.tls_p]
+tls_peer_ocsp_this_update.restype = types.time_t
+
+tls_peer_ocsp_url = _lib.tls_peer_ocsp_url
+tls_peer_ocsp_url.argtypes = [types.tls_p]
+tls_peer_ocsp_url.restype = c_char_p
 
 __all__ = sorted(name for name in sys.modules[__name__].__dict__ if name.startswith('tls_'))
 __all__.extend(('types', 'constants', 'errors'))

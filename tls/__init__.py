@@ -279,5 +279,71 @@ def tls_conn_version(_ctx):
     return r.decode()
 
 
+def tls_ocsp_process_response(_ctx, _response, _size):
+    r = lib.tls_ocsp_process_response(_ctx, _response.encode(), _size)
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
+
+
+def tls_peer_ocsp_cert_status(_ctx):
+    r = lib.tls_peer_ocsp_cert_status(_ctx)
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
+    return r
+
+
+def tls_peer_ocsp_crl_reason(_ctx):
+    r = lib.tls_peer_ocsp_crl_reason(_ctx)
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
+    return r
+
+
+def tls_peer_ocsp_next_update(_ctx):
+    r = lib.tls_peer_ocsp_next_update(_ctx)
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
+
+    return datetime.fromtimestamp(r)
+
+
+def tls_peer_ocsp_response_status(_ctx):
+    r = lib.tls_peer_ocsp_response_status(_ctx)
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
+    return r
+
+
+def tls_peer_ocsp_result(_ctx):
+    r = lib.tls_peer_ocsp_result(_ctx)
+    if r is not None:
+        return r.decode()
+
+
+def tls_peer_ocsp_revocation_time(_ctx):
+    r = lib.tls_peer_ocsp_revocation_time(_ctx)
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
+
+    return datetime.fromtimestamp(r)
+
+
+def tls_peer_ocsp_this_update(_ctx):
+    r = lib.tls_peer_ocsp_this_update(_ctx)
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
+
+    return datetime.fromtimestamp(r)
+
+
+def tls_peer_ocsp_url(_ctx):
+    r = lib.tls_peer_ocsp_url(_ctx)
+    if r is not None:
+        return r.decode()
+
+
+
+
+
 
 
