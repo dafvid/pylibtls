@@ -150,6 +150,14 @@ tls_accept_socket = _lib.tls_accept_socket
 tls_accept_socket.argtypes = [types.tls_p, types.tls_pp, c_int]
 tls_accept_socket.restype = c_int
 
+tls_connect = _lib.tls_connect
+tls_connect.argtypes = [types.tls_p, c_char_p, c_char_p]
+tls_connect.restype = c_int
+
+tls_connect_servername = _lib.tls_connect_servername
+tls_connect_servername.argtypes = [types.tls_p, c_char_p, c_char_p, c_char_p]
+tls_connect_servername.restype = c_int
+
 tls_connect_socket = _lib.tls_connect_socket
 tls_connect_socket.argtypes = [types.tls_p, c_int, c_char_p]
 tls_connect_socket.restype = c_int

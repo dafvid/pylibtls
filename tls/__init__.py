@@ -163,6 +163,18 @@ def tls_accept_socket(_ctx, _cctx, _socket):
         raise TLSError(tls_error(_ctx))
 
 
+def tls_connect(_ctx, _host, _port):
+    r = lib.tls_connect(_ctx, _host.encode(), str(_port).encode())
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
+
+
+def tls_connect_servername(_ctx, _host, _port, _servername):
+    r = lib.tls_connect_servername(_ctx, _host.encode(), str(_port).encode(), _servername.encode())
+    if r == -1:
+        raise TLSError(tls_error(_ctx))
+
+
 def tls_connect_socket(_ctx, _s, _servername):
     r = lib.tls_connect_socket(_ctx, _s.fileno(), _servername.encode())
     if r == -1:
