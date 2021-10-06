@@ -1,6 +1,6 @@
 import sys
 
-from ctypes import POINTER, CDLL, c_int, c_char_p, c_void_p, c_size_t, c_ssize_t, c_uint32
+from ctypes import POINTER, CDLL, c_int, c_char_p, c_void_p, c_size_t, c_ssize_t, c_uint32, c_ubyte
 
 from . import types
 
@@ -130,6 +130,18 @@ tls_config_parse_protocols = _lib.tls_config_parse_protocols
 tls_config_parse_protocols.argtypes = [POINTER(c_uint32), c_char_p]
 tls_config_parse_protocols.restype = c_int
 
+tls_config_set_session_id = _lib.tls_config_set_session_id
+tls_config_set_session_id.argtypes = [types.tls_config_p, POINTER(c_ubyte), c_size_t]
+tls_config_set_session_id.restype = c_int
+
+tls_config_set_session_lifetime = _lib.tls_config_set_session_lifetime
+tls_config_set_session_lifetime.argtypes = [types.tls_config_p, c_int]
+tls_config_set_session_lifetime.restype = c_int
+
+tls_config_add_ticket_key = _lib.tls_config_add_ticket_key
+tls_config_add_ticket_key.argtypes = [types.tls_config_p, c_uint32, POINTER(c_ubyte), c_size_t]
+tls_config_add_ticket_key.restype = c_int
+
 tls_client = _lib.tls_client
 tls_client.restype = types.tls_p
 
@@ -231,7 +243,7 @@ tls_conn_version.argtypes = [types.tls_p]
 tls_conn_version.restype = c_char_p
 
 tls_ocsp_process_response = _lib.tls_ocsp_process_response
-tls_ocsp_process_response.argtypes = [types.tls_p, c_char_p, c_size_t]
+tls_ocsp_process_response.argtypes = [types.tls_p, POINTER(c_ubyte), c_size_t]
 tls_ocsp_process_response.restype = c_int
 
 tls_peer_ocsp_cert_status = _lib.tls_peer_ocsp_cert_status

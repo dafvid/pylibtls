@@ -151,6 +151,26 @@ def tls_config_parse_protocols(_protostr):
     return p.value
 
 
+def tls_config_set_session_id(_config, _session_id):
+    assert isinstance(_session_id, bytes)
+    r = lib.tls_config_set_session_id(_config, _session_id, len(_session_id))
+    if r == -1:
+        raise TLSError(tls_config_error(_config))
+
+
+def tls_config_set_session_lifetime(_config, _lifetime):
+    r = lib.tls_config_set_session_lifetime(_config, _lifetime)
+    if r == -1:
+        raise TLSError(tls_config_error(_config))
+
+
+def tls_config_add_ticket_key(_config, _keyrev, _key):
+    assert isinstance(_key, bytes)
+    r = lib.tls_config_add_ticket_key(_config, _keyrev, _key, len(_key))
+    if r == -1:
+        raise TLSError(tls_config_error(_config))
+
+
 def tls_configure(_ctx, _config):
     r = lib.tls_configure(_ctx, _config)
     if r == -1:
