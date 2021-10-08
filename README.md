@@ -23,7 +23,10 @@ The aim is to just wrap the API as thinly as possible. A few principles:
 - Argument names are not always pythonic but matches that of libtls.h
 
 ## Getting started
-First thing is getting libtls somehow. If you already have LibreSSL you should be good to go. Otherwise hope the `--enable-libtls-only` flag is implemented in whatever package thingamajig that floats your boat. FreeBSD got the forementioned port. MacOS got nothing (yet...).
+First thing is getting libtls somehow. If you already have LibreSSL you should be good to go. Otherwise hope the `--enable-libtls-only` flag is implemented in whatever package thingamajig that floats your boat:
+- FreeBSD got the forementioned port
+- MacOS got nothing (yet...)
+- Gentoo got libtls ported to OpenSSL (ewww...)
 
 Once I get it up on PyPi you can just use:
 
