@@ -3,6 +3,7 @@ import ctypes
 from datetime import datetime
 
 from . import lib
+from .lib import TLSError
 
 from .lib import (tls_init, tls_config_new, tls_config_free, tls_config_prefer_ciphers_client,
                   tls_config_prefer_ciphers_server, tls_config_insecure_noverifycert, tls_config_insecure_noverifyname,
@@ -12,10 +13,6 @@ from .lib import (tls_init, tls_config_new, tls_config_free, tls_config_prefer_c
                   tls_conn_cipher_strength)
 
 from .lib.constants import *
-
-
-class TLSError(Exception):
-    pass
 
 
 def tls_config_error(_config):

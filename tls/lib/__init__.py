@@ -1,11 +1,35 @@
+import os
 import sys
 
-from ctypes import POINTER, CDLL, c_int, c_char_p, c_void_p, c_size_t, c_ssize_t, c_uint32, c_ubyte
+from ctypes import POINTER, cdll, CDLL, c_uint8, c_int, c_char_p, c_void_p, c_size_t, c_ssize_t, c_uint32, c_ubyte
+from ctypes.util import find_library
 
 from . import types
 
-# TODO load by name or env
-_lib = CDLL('/usr/local/lib/libtls.so')
+
+class TLSError(Exception):
+    pass
+
+
+def _load():
+    path_from_env = os.environ.get('PYLIBTLS_LIBTLS_PATH')
+    if path_from_env is not None:
+        try:
+            l = CDLL(path_from_env)
+        except OSError as e:
+            raise TLSError("Unable to load '{}' from env PYLIBTLS_LIBTLS_PATH".format(path_from_env))
+    else:
+        lib_path = find_library('tls')
+        try:
+            l = CDLL(lib_path)
+        except OSError as e:
+            raise TLSError("Cannot find lib 'tls'")
+
+    return l
+
+
+_lib = _load()
+del _load
 
 
 tls_init = _lib.tls_init
