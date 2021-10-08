@@ -1,6 +1,6 @@
 # pylibtls
 ## Background
-I always thought it was a bit of a mistake for [LibreSSL](https://www.libressl.org/index.html) to be an in place replacement for OpenSSL. I just wanted to use libtls and be done with it. But since LibreSSL always replaced OpenSSL and that always seemed to be problematic I looked for ways to install just libtls, but to no awail. Until April 18, 2021 when version 3.3.2 of LibreSSL was released.
+I always thought it was a bit of a mistake for [LibreSSL](https://www.libressl.org/index.html) to be an drop-in replacement for OpenSSL. I just wanted to use libtls and be done with it. But since LibreSSL always replaced OpenSSL and that always seemed to be problematic I looked for ways to install just libtls, but to no awail. Until April 18, 2021 when version 3.3.2 of LibreSSL was released.
 
 From the [release notes](https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-3.3.2-relnotes.txt) (way down): 
 >Added '--enable-libtls-only' build option, which builds and installs a statically-linked libtls, skipping libcrypto and libssl. This is useful for systems that ship with OpenSSL but wish to also package libtls.
@@ -128,3 +128,6 @@ First pushed to GitHub (A bit nervous). Most of the API implemented. Only client
 - [ ] File descriptor versions of the same
 - [ ] `tls_peer_cert_chain_pem()`
 - [ ] `assert` a few things here and there
+
+## Acknowledgments
+- [python-libtls](https://bitbucket.org/vinay.sajip/python-libtls/src/master/) and [python-gnutls](https://github.com/AGProjects/python-gnutls) for inspiration
