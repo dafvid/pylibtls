@@ -1,3 +1,7 @@
+"""
+pylibtls - Python bindings for libtls
+"""
+
 import ctypes
 
 from datetime import datetime
@@ -13,6 +17,8 @@ from .lib import (tls_init, tls_config_new, tls_config_free, tls_config_prefer_c
                   tls_conn_cipher_strength)
 
 from .lib.constants import *
+
+__version__ = '0.1.1'
 
 
 def tls_config_error(_config):
