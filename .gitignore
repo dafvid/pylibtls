@@ -5,3 +5,4 @@ tls_todo.h
 run.py
 run_server.py
 *.core
+dist/*

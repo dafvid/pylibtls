@@ -10,11 +10,11 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 
 [project.urls]
-Repo = "https://github.com/dafvid/pylibtls"
+GitHub = "https://github.com/dafvid/pylibtls"
 
 [project.optional-dependencies]
 test = [
-    "pytestCZZ",
+    "pytest",
     "pytest-cov",
 ]
 

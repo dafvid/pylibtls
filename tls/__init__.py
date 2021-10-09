@@ -3,6 +3,7 @@ pylibtls - Python bindings for libtls
 """
 
 import ctypes
+import sys
 
 from datetime import datetime
 
@@ -377,8 +378,6 @@ def tls_peer_ocsp_url(_ctx):
         return r.decode()
 
 
-
-
-
-
-
+__all__ = sorted(name for name in sys.modules[__name__].__dict__ if name.startswith('tls_'))
+__all__.extend(sorted(name for name in sys.modules[__name__].__dict__ if name.startswith('TLS_')))
+__all__.extend(('TLSError',))

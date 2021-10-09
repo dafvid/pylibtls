@@ -307,4 +307,4 @@ tls_peer_ocsp_url.argtypes = [types.tls_p]
 tls_peer_ocsp_url.restype = c_char_p
 
 __all__ = sorted(name for name in sys.modules[__name__].__dict__ if name.startswith('tls_'))
-__all__.extend(('types', 'constants', 'errors'))
+__all__.extend(('types', 'constants'))
