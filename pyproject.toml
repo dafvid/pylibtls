@@ -1,0 +1,22 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "pylibtls"
+authors = [{name = "David Stenwall", email = "david@stenwall.io"}]
+readme = "README.md"
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+
+[project.urls]
+Repo = "https://github.com/dafvid/pylibtls"
+
+[project.optional-dependencies]
+test = [
+    "pytestCZZ",
+    "pytest-cov",
+]
+
+[tool.flit.module]
+name = "tls"
