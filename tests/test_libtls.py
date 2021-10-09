@@ -27,7 +27,7 @@ def test_external_server():
     ctx = tls_client()
     tls_configure(ctx, cfg)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    host = 'www.dafnet.se'
+    host = 'www.openbsd.org'
     s.connect((host, 443))
     tls_connect_socket(ctx, s, host)
     tls_handshake(ctx)
