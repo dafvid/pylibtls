@@ -1,4 +1,5 @@
 # pylibtls
+[![PyPI version](https://badge.fury.io/py/pylibtls.svg)](https://badge.fury.io/py/pylibtls)
 
 ## About
 Developed initially in september 2021 on FreeBSD 13.0 with LibreSSL 3.3.3 with API Version `20200120`. 
