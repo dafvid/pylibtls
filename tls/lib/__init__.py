@@ -12,18 +12,15 @@ class TLSError(Exception):
 
 
 def _load():
-    path_from_env = os.environ.get('PYLIBTLS_LIBTLS_PATH')
-    if path_from_env is not None:
-        try:
-            l = CDLL(path_from_env)
-        except OSError as e:
-            raise TLSError("Unable to load '{}' from env PYLIBTLS_LIBTLS_PATH".format(path_from_env))
-    else:
+    lib_path = os.environ.get('PYLIBTLS_LIBTLS_PATH')
+    if lib_path is None:
         lib_path = find_library('tls')
-        try:
-            l = CDLL(lib_path)
-        except OSError as e:
-            raise TLSError("Cannot find lib 'tls'")
+        if lib_path is None:
+            raise TLSError("Cannot find lib 'tls'. Try specifying path with env PYLIBTLS_LIBTLS_PATH")
+    try:
+        l = CDLL(lib_path)
+    except OSError as e:
+        raise TLSError("Unable to load libtls from path '{}'".format(lib_path))
 
     return l
 
