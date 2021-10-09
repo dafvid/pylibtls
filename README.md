@@ -1,16 +1,7 @@
 # pylibtls
-## Background
-I always thought it was a bit of a mistake for [LibreSSL](https://www.libressl.org/index.html) to be an drop-in replacement for OpenSSL. I just wanted to use libtls and be done with it. But since LibreSSL always replaced OpenSSL and that always seemed to be problematic I looked for ways to install just libtls, but to no awail. Until April 18, 2021 when version 3.3.2 of LibreSSL was released.
-
-From the [release notes](https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-3.3.2-relnotes.txt) (way down): 
->Added '--enable-libtls-only' build option, which builds and installs a statically-linked libtls, skipping libcrypto and libssl. This is useful for systems that ship with OpenSSL but wish to also package libtls.
-
-*YEY!*
-
-Some time after it was made a [flavor](https://docs.freebsd.org/en/books/porters-handbook/flavors/) of the FreeBSD LibreSSL [port](https://www.freshports.org/security/libressl/). So now I finally had it! So I started looking for Python wrappers for it. I found [python-libtls](https://pypi.org/project/python-libtls/) by Vinay Sajip. Last update in 2017, looked abandoned, so [I made a new one](https://www.youtube.com/channel/UCMrMVIBtqFW6O0-MWq26gqw).
 
 ## About
-Developed at first in september 2021 on FreeBSD 13.0 with LibreSSL 3.3.3 with API Version `20200120`. 
+Developed initially in september 2021 on FreeBSD 13.0 with LibreSSL 3.3.3 with API Version `20200120`. 
 
 The aim is to just wrap the API as thinly as possible. A few principles: 
 - `str` is encoded using default encoding (just calling `encode()`)
@@ -22,26 +13,42 @@ The aim is to just wrap the API as thinly as possible. A few principles:
 - The order of the functions defined matches that of libtls.h
 - Argument names are not always pythonic but matches that of libtls.h
 
+## Background
+I always thought it was a bit of a mistake for [LibreSSL](https://www.libressl.org/index.html) to be an drop-in replacement for OpenSSL. I just wanted to use libtls and be done with it. But since LibreSSL always replaced OpenSSL and that always seemed to be problematic I looked for ways to install just libtls, but to no awail. Until April 18, 2021 when version 3.3.2 of LibreSSL was released.
+
+From the [release notes](https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-3.3.2-relnotes.txt) (way down): 
+>Added '--enable-libtls-only' build option, which builds and installs a statically-linked libtls, skipping libcrypto and libssl. This is useful for systems that ship with OpenSSL but wish to also package libtls.
+
+*YEY!*
+
+Some time after it was made a [flavor](https://docs.freebsd.org/en/books/porters-handbook/flavors/) of the FreeBSD LibreSSL [port](https://www.freshports.org/security/libressl/). So now I finally had it! So I started looking for Python wrappers for it. I found [python-libtls](https://pypi.org/project/python-libtls/) by Vinay Sajip. Last update in 2017, looked abandoned, so [I made a new one](https://www.youtube.com/channel/UCMrMVIBtqFW6O0-MWq26gqw).
+
 ## Getting started
-First thing is getting libtls somehow. If you already have LibreSSL you should be good to go. Otherwise hope the `--enable-libtls-only` flag is implemented in whatever package thingamajig that floats your boat:
+### Getting libtls
+First thing is getting libtls somehow. If you already have LibreSSL you should be good to go. Otherwise hope the **&#x2011;&#x2011;enable&#x2011;libtls&#x2011;only** build flag is used somehow in whatever package thingamajig you're using:
 - FreeBSD got the forementioned port
 - MacOS got nothing (yet...)
 - Gentoo got libtls ported to OpenSSL (ewww...)
 
+There's an env variable you can use to specify the path to libtls if `ctypes` is unable to find it automagically and that's `PYLIBTLS_LIBTLS_PATH`.
+
+### Getting pylibtls
 Once I get it up on PyPi you can just use:
-
-`pip install pylibtls`
-
+```sh
+$> pip install pylibtls
+```
 and 
-
-`import tls`
-
+```py
+import tls
+```
 But right now your only option is to clone this repo and work your way from there. Godspeed!
 
-Functions are named the same so `tls_init()` is `tls.tls_init()` and so on.
 
 ## Usage
 Oh the fun part!
+
+Functions are named the same so `tls_init()` is `tls.tls_init()` and so on. Constants from header file are just `tls.TLS_A_CONSTANT`.
+
 
 ```python
 from tls import (tls_config_new, tls_client, tls_configure, tls_connect, tls_write, 
