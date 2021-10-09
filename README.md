@@ -33,22 +33,19 @@ First thing is getting libtls somehow. If you already have LibreSSL you should b
 There's an env variable you can use to specify the path to libtls if `ctypes` is unable to find it automagically and that's `PYLIBTLS_LIBTLS_PATH`.
 
 ### Getting pylibtls
-Once I get it up on PyPi you can just use:
+Just use pip:
 ```sh
 $> pip install pylibtls
 ```
-and 
+and in your script
 ```py
 import tls
 ```
-But right now your only option is to clone this repo and work your way from there. Godspeed!
-
 
 ## Usage
 Oh the fun part!
 
 Functions are named the same so `tls_init()` is `tls.tls_init()` and so on. Constants from header file are just `tls.TLS_A_CONSTANT`.
-
 
 ```python
 from tls import (tls_config_new, tls_client, tls_configure, tls_connect, tls_write, 
@@ -129,6 +126,8 @@ This is using the extra `dict`s I put in for reverse lookup of values-to-name: `
 None yet, apart from this README. See the [OpenBSD documentation](https://man.openbsd.org/tls_init.3) for reference. It should get you up and running somewhat.
 
 ## Status
+#### 2021-10-09
+Published on [PyPi](https://pypi.org/project/pylibtls/)!
 #### 2021-10-08
 First pushed to GitHub (A bit nervous). Most of the API implemented. Only client functionality tested. No local OCSP-stuff (getting the staple file is HARD). Only tested on FreeBSD. Should work fine on Linux at least. No `libtls-only` brew Formulae so MacOS is out (might be next project). Windows seems to be a sad chapter in general. Vinay stranded [here](https://github.com/libressl-portable/portable/issues/266) more or less.
 
