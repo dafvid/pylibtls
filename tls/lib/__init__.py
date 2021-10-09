@@ -266,6 +266,10 @@ tls_conn_version = _lib.tls_conn_version
 tls_conn_version.argtypes = [types.tls_p]
 tls_conn_version.restype = c_char_p
 
+#tls_load_file = _lib.tls_load_file
+#tls_load_file.argtypes = [c_char_p, POINTER(c_size_t), c_char_p]
+#tls_load_file.restype = POINTER(c_uint8)
+
 tls_ocsp_process_response = _lib.tls_ocsp_process_response
 tls_ocsp_process_response.argtypes = [types.tls_p, POINTER(c_ubyte), c_size_t]
 tls_ocsp_process_response.restype = c_int
