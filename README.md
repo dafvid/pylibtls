@@ -26,10 +26,19 @@ Some time after it was made a [flavor](https://docs.freebsd.org/en/books/porters
 
 ## Getting started
 ### Getting libtls
-First thing is getting libtls somehow. If you already have LibreSSL you should be good to go. Otherwise hope the **&#x2011;&#x2011;enable&#x2011;libtls&#x2011;only** build flag is used somehow in whatever package thingamajig you're using:
-- FreeBSD got the forementioned port
-- MacOS got nothing (yet...)
-- Gentoo got libtls ported to OpenSSL (ewww...)
+First thing is getting libtls somehow. If you already have LibreSSL you should be good to go. Otherwise hope the **&#x2011;&#x2011;enable&#x2011;libtls&#x2011;only** build flag is used somehow in whatever package thingamajig you're using.
+#### FreeBSD
+```sh
+pkg install libressl-libtls
+```
+#### MacOS
+I was suprised to find out Apple deprecated OpenSSL after High Sierra and now ships with LibreSSL. But you can't use it =/. But install it with Homebrew!
+```zsh
+brew install libressl
+```
+It's not linked since it would mess with the one shipped with MacOS. Set the env variable `PYLIBTLS_LIBTLS_PATH` to `/usr/local/opt/libressl/lib/libtls.dylib` and you're good to go.
+#### Gentoo
+Gentoo has got libtls ported to OpenSSL (ewww...)
 
 There's an env variable you can use to specify the path to libtls if `ctypes` is unable to find it automagically and that's `PYLIBTLS_LIBTLS_PATH`.
 
