@@ -6,3 +6,5 @@ run.py
 run_server.py
 *.core
 dist/*
+*__pycache__*
+*.pem

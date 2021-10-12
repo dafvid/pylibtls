@@ -181,11 +181,13 @@ def tls_configure(_ctx, _config):
         raise TLSError(tls_error(_ctx))
 
 
-def tls_accept_socket(_ctx, _cctx, _socket):
-    r = lib.tls_accept_socket(_ctx, _cctx, _socket.fileno())
+def tls_accept_socket(_ctx, _socket):
+    from .lib.types import tls_p
+    new_ctx = tls_p()
+    r = lib.tls_accept_socket(_ctx, ctypes.byref(new_ctx), _socket.fileno())
     if r == -1:
         raise TLSError(tls_error(_ctx))
-
+    return new_ctx
 
 def tls_connect(_ctx, _host, _port):
     r = lib.tls_connect(_ctx, _host.encode(), str(_port).encode())
