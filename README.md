@@ -130,7 +130,38 @@ tls_config_free(cfg)
 tls_close(ctx)
 tls_free(ctx)
 ```
-This is using the extra `dict`s I put in for reverse lookup of values-to-name: `TLS_OCSP_RESPONSE`, `TLS_OCSP_CERT` and `TLS_CRL_REASON`. They require that OCSP stapling is active on the server in question. In the example, it is. 
+This is using the extra `dict`s I put in for reverse lookup of values-to-name: `TLS_OCSP_RESPONSE`, `TLS_OCSP_CERT` and `TLS_CRL_REASON`. They require that OCSP stapling is active on the server in question. In the example, it is.
+
+Very simple server
+```py
+from tls import *
+import socket
+
+
+cfg = tls_config_new()
+tls_config_set_keypair_file(cfg, 'cert.pem', 'privkey.pem')
+
+ctx = tls_server()
+tls_configure(ctx, cfg)
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind(('www.example.com', 2345))
+s.listen(10)
+print('Listening on socket...')
+c, addr = s.accept()
+print(addr, 'connected')
+cctx = tls_accept_socket(ctx, c)
+tls_write(cctx, 'Hello World'.encode())
+print(tls_read(cctx))
+tls_close(cctx)
+tls_free(cctx)
+
+tls_config_free(cfg)
+tls_free(ctx)
+
+s.close()
+```
+Accepts a single connection and writes `Hello World` then reads once and shuts down.
 
 ## Documentation
 None yet, apart from this README. See the [OpenBSD documentation](https://man.openbsd.org/tls_init.3) for reference. It should get you up and running somewhat.
