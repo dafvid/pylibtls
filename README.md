@@ -95,6 +95,7 @@ print('host:', host)
 
 print('connect_socket')
 tls_connect(ctx, host, 443)
+tls_handshake(ctx)
 print("Cert provided:", tls_peer_cert_provided(ctx))
 print("Hash (SHA256):", tls_peer_cert_hash(ctx))
 print("Issuer:", tls_peer_cert_issuer(ctx))
