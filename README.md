@@ -188,6 +188,8 @@ None yet, apart from this README. See the [OpenBSD documentation](https://man.op
 ## Status
 #### 2021-10-17
 Instructions for Linux (Rocky Linux 8.4)
+#### 2021-10-13
+Instructions for simple server
 #### 2021-10-09
 Published on [PyPi](https://pypi.org/project/pylibtls/)!
 #### 2021-10-08
