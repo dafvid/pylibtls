@@ -37,9 +37,27 @@ I was suprised to find out Apple deprecated OpenSSL after High Sierra and now sh
 brew install libressl
 ```
 It's not linked since it would mess with the one shipped with MacOS. Set the env variable `PYLIBTLS_LIBTLS_PATH` to `/usr/local/opt/libressl/lib/libtls.dylib` and you're good to go.
-#### Gentoo
-Gentoo has got libtls ported to OpenSSL (ewww...)
 
+#### Linux (Rocky Linux 8.4)
+There's no love for libtls in the Linux community! So no package in rpm. Beware of the package `libretls`, it's libtls on top of OpenSSL!
+But thankfully it's pretty easy to compile it yourself. This is how I installed it on Rocky Linux, YMMW. Instructions @ [GitHub](https://github.com/libressl-portable/portable)
+```sh
+dnf install wget
+wget https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-3.3.5.tar.gz
+cd libressl-3.3.5
+./configure --enable-libtls-only  # very important flag!
+make check  # as recommended on GitHub
+make install
+```
+Now it's installed in `/usr/local/lib` but you need to tell the linker that. There's a few ways to do that. I added the path to `/etc/ld.so.con`. You can also add it to env var `LD_LIBRARY_PATH`.
+
+Then you need to tell libtls how to find your CA bundle. The default path is apparently hard coded to `/etc/ssl/cert.pem`. This is NOT where Rocky Linux keeps them, so I soft linked it like so:
+```sh
+ln -s /etc/pki/tls/cert.pem /etc/ssl/cert.pem
+```
+This all depends on your distro. All RHEL derivaties keep their bundle in `/etc/pki/tls/cert.pem`.
+
+#### Environment variables
 There's an env variable you can use to specify the path to libtls if `ctypes` is unable to find it automagically and that's `PYLIBTLS_LIBTLS_PATH`.
 
 ### Getting pylibtls
@@ -168,6 +186,8 @@ Accepts a single connection and writes `Hello World` then reads once and shuts d
 None yet, apart from this README. See the [OpenBSD documentation](https://man.openbsd.org/tls_init.3) for reference. It should get you up and running somewhat.
 
 ## Status
+#### 2021-10-17
+Instructions for Linux (Rocky Linux 8.4)
 #### 2021-10-09
 Published on [PyPi](https://pypi.org/project/pylibtls/)!
 #### 2021-10-08
