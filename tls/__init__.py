@@ -218,7 +218,7 @@ def tls_read(_ctx, _buflen=2048):
     r = lib.tls_read(_ctx, _buf, _buflen)
     if r == -1:
         raise TLSError(tls_error(_ctx))
-    return _buf.value
+    return _buf.raw[:r]
 
 
 def tls_write(_ctx, _data):
